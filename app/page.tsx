@@ -27,6 +27,76 @@ import { FaSquareYoutube } from "react-icons/fa6";
 
 const FONT_LINK = "Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700";
 
+/* ------------------------------------------------------------------ */
+/*  DATA STRUCTURE - Ready for Database Integration                   */
+/* ------------------------------------------------------------------ */
+
+const DATA = {
+  navigation: {
+    announcement: [
+      "FREE SHIPPING ON ORDERS OVER $50",
+      "EXCLUSIVE OFFERS FOR BEAUTY LOVERS",
+      "SIGN UP & GET 10% OFF",
+    ],
+    mainNav: ["New In", "Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Tools", "Brands"],
+  },
+  categories: [
+    { id: 1, name: "Makeup", tone: "blush" },
+    { id: 2, name: "Skincare", tone: "sky" },
+    { id: 3, name: "Haircare", tone: "sand" },
+    { id: 4, name: "Fragrance", tone: "blush" },
+    { id: 5, name: "Tools & Brushes", tone: "sage" },
+    { id: 6, name: "Accessories", tone: "blush" },
+    { id: 7, name: "New Arrivals", tone: "sand", featured: "NEW" },
+    { id: 8, name: "Sale", tone: "blush", featured: "SALE" },
+  ],
+  promotions: [
+    { id: 1, title: "Flawless Look Every Day", body: "Makeup that enhances your natural beauty.", cta: "Shop Makeup", tone: "sky" },
+    { id: 2, title: "Beauty Accessories", body: "The perfect finishing touch to your look.", cta: "Shop Accessories", tone: "blush" },
+    { id: 3, title: "Treat Yourself Sale", body: "Up to 30% off on beauty favorites.", cta: "Shop Sale", tone: "sand", badge: "UP TO 30% OFF" },
+  ],
+  products: [
+    { id: 1, name: "Hydrating Glow Face Serum", price: 24.99, rating: 4.5, reviews: 128, tone: "blush" },
+    { id: 2, name: "Velvet Matte Lipstick", price: 14.99, rating: 4.5, reviews: 96, tone: "sand", tag: "Best Seller" },
+    { id: 3, name: "Volume & Curl Mascara", price: 16.99, rating: 4, reviews: 73, tone: "ink" },
+    { id: 4, name: "Nourishing Hair Shampoo", price: 19.99, rating: 4.5, reviews: 54, tone: "sky" },
+    { id: 5, name: "4 Piece Brush Set", price: 18.99, rating: 4.5, reviews: 112, tone: "blush" },
+    { id: 6, name: "Fragrance Eau de Parfum", price: 29.99, rating: 4.5, reviews: 88, tone: "sand" },
+  ],
+  whyChooseUs: [
+    { id: 1, icon: "Leaf", title: "Clean Formulas", body: "Cruelty-free, dermatologist-tested ingredients you can trust on your skin." },
+    { id: 2, icon: "Award", title: "Curated by Experts", body: "Every product is vetted by our in-house beauty team before it reaches you." },
+    { id: 3, icon: "Sparkles", title: "Personalized Picks", body: "Recommendations tailored to your skin type, tone, and routine." },
+    { id: 4, icon: "Heart", title: "Loved by Thousands", body: "Over 50,000 five-star reviews from a community that keeps coming back." },
+  ],
+  guides: [
+    { id: 1, tag: "Skincare 101", title: "How to layer actives without irritating your skin", tone: "sky", read: "6 min read" },
+    { id: 2, tag: "Makeup", title: "The 5-minute everyday face for busy mornings", tone: "blush", read: "4 min read" },
+    { id: 3, tag: "Haircare", title: "Finding the right routine for your hair porosity", tone: "sand", read: "7 min read" },
+  ],
+  testimonials: [
+    { id: 1, name: "Priya M.", role: "Verified Buyer", quote: "My skin has never looked this even. The glow serum is a genuine repeat-purchase for me.", rating: 5 },
+    { id: 2, name: "Alina K.", role: "Verified Buyer", quote: "Fast shipping, beautifully packaged, and the lipstick shade range is unmatched.", rating: 5 },
+    { id: 3, name: "Devon R.", role: "Verified Buyer", quote: "Finally a haircare line that doesn't weigh my hair down. Shampoo smells incredible too.", rating: 4 },
+  ],
+  trustedBrands: ["DERMALOGICA", "GLOSSIER", "THE ORDINARY", "FENTY BEAUTY", "OLAPLEX", "TATCHA", "REFY", "DRUNK ELEPHANT"],
+  trustBar: [
+    { id: 1, icon: "Truck", title: "Free Shipping", body: "On orders over $50" },
+    { id: 2, icon: "ShieldCheck", title: "100% Authentic", body: "Genuine products only" },
+    { id: 3, icon: "RotateCcw", title: "Easy Returns", body: "30-day return policy" },
+    { id: 4, icon: "Headphones", title: "Support 24/7", body: "We're here for you" },
+  ],
+  socialLinks: ["Model portrait", "Makeup palette flatlay", "Perfume + petals", "Model close-up", "Skincare set"],
+  footer: {
+    columns: [
+      { title: "Shop", links: ["Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Sale"] },
+      { title: "Customer Service", links: ["Contact Us", "Shipping & Delivery", "Returns & Exchanges", "FAQs", "Track Your Order"] },
+      { title: "About Us", links: ["Our Story", "Ingredients", "Sustainability", "Blog", "Careers"] },
+      { title: "My Account", links: ["Sign In / Register", "My Orders", "Wishlist", "Account Settings"] },
+    ],
+  },
+};
+
 function Placeholder({ label, className = "", tone = "blush" }) {
   const tones = {
     blush: "bg-[#F3D8DA]",
@@ -63,25 +133,19 @@ function Stars({ rating = 4.5 }) {
 /* ---------------------------- NAV --------------------------------- */
 
 function AnnouncementBar() {
-  const items = [
-    "FREE SHIPPING ON ORDERS OVER $50",
-    "EXCLUSIVE OFFERS FOR BEAUTY LOVERS",
-    "SIGN UP & GET 10% OFF",
-  ];
   return (
     <div className="bg-[#C9727C] text-white text-[12px] tracking-wide">
       <div className="max-w-[1280px] mx-auto flex items-center justify-center gap-10 py-2.5 px-6">
-        {items.map((t, i) => (
+        {DATA.navigation.announcement.map((t, i) => (
           <span key={i} className="hidden sm:inline whitespace-nowrap">{t}</span>
         ))}
-        <span className="sm:hidden">{items[0]}</span>
+        <span className="sm:hidden">{DATA.navigation.announcement[0]}</span>
       </div>
     </div>
   );
 }
 
 function Header() {
-  const links = ["New In", "Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Tools", "Brands"];
   return (
     <header className="bg-[#FBF7F3] sticky top-0 z-40 border-b border-black/5">
       <div className="max-w-[1280px] mx-auto px-6 pt-5 pb-4 flex items-center gap-8">
@@ -110,7 +174,7 @@ function Header() {
         </div>
       </div>
       <nav className="max-w-[1280px] mx-auto px-6 pb-3.5 flex items-center gap-8 overflow-x-auto no-scrollbar">
-        {links.map((l) => (
+        {DATA.navigation.mainNav.map((l) => (
           <a key={l} href="#" className="text-[12px] tracking-[0.08em] uppercase text-[#211D1B]/75 hover:text-[#C9727C] whitespace-nowrap transition-colors">
             {l}
           </a>
@@ -127,7 +191,7 @@ function Hero() {
   return (
     <section className="max-w-[1280px] mx-auto px-6 pt-6 grid grid-cols-1 lg:grid-cols-[1.65fr_1fr] gap-4">
       <div className="relative rounded-[6px] overflow-hidden bg-[#F3D8DA] min-h-[420px] lg:min-h-[560px] flex items-end">
-        <img src="/hero-image.jpg" alt="Hero — model portrait, soft pink tones" className="absolute inset-0 w-full h-full object-cover" />
+        <img src="/hero.png" alt="Hero — model portrait, soft pink tones" className="absolute inset-0 w-full h-full object-cover" />
         <div className="relative z-10 p-8 md:p-12 max-w-[480px]">
           <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">New Season, New You</span>
           <h1 className="font-serif text-[42px] md:text-[56px] leading-[1.02] mt-3 text-[#211D1B]">
@@ -154,8 +218,8 @@ function Hero() {
 
       <div className="grid grid-rows-2 gap-4">
         <div className="relative rounded-[6px] overflow-hidden bg-[#DCE6E8] p-7 flex flex-col justify-between min-h-[270px]">
-          <Placeholder label="Skincare bottles flatlay" className="absolute inset-0" tone="sky" />
-          <div className="relative z-10">
+                
+            <div className="relative z-10">
             <h3 className="font-serif text-[24px] leading-tight text-[#211D1B]">Skincare<br />Essentials</h3>
             <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[190px]">Glow starts with great skincare.</p>
           </div>
@@ -181,16 +245,6 @@ function Hero() {
 /* ------------------------ CATEGORY WHEEL ---------------------------- */
 
 function CategoryCircles() {
-  const cats = [
-    { name: "Makeup", tone: "blush" },
-    { name: "Skincare", tone: "sky" },
-    { name: "Haircare", tone: "sand" },
-    { name: "Fragrance", tone: "blush" },
-    { name: "Tools & Brushes", tone: "sage" },
-    { name: "Accessories", tone: "blush" },
-    { name: "New Arrivals", tone: "sand", featured: "NEW" },
-    { name: "Sale", tone: "blush", featured: "SALE" },
-  ];
   return (
     <section className="max-w-[1280px] mx-auto px-6 pt-14">
       <div className="flex items-center justify-between mb-7">
@@ -198,8 +252,8 @@ function CategoryCircles() {
         <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold flex items-center gap-1">View All <ArrowRight size={13} /></a>
       </div>
       <div className="grid grid-cols-4 md:grid-cols-8 gap-x-4 gap-y-8">
-        {cats.map((c) => (
-          <a href="#" key={c.name} className="flex flex-col items-center gap-3 group">
+        {DATA.categories.map((c) => (
+          <a href="#" key={c.id} className="flex flex-col items-center gap-3 group">
             <div className={`w-[76px] h-[76px] md:w-[92px] md:h-[92px] rounded-full flex items-center justify-center transition-transform group-hover:-translate-y-1 ${
               c.tone === "blush" ? "bg-[#F3D8DA]" : c.tone === "sky" ? "bg-[#DCE6E8]" : c.tone === "sand" ? "bg-[#EFE3D3]" : "bg-[#E4E9DF]"
             }`}>
@@ -220,15 +274,10 @@ function CategoryCircles() {
 /* ------------------------- PROMO TRIO -------------------------------- */
 
 function PromoTrio() {
-  const promos = [
-    { title: "Flawless Look Every Day", body: "Makeup that enhances your natural beauty.", cta: "Shop Makeup", tone: "sky" },
-    { title: "Beauty Accessories", body: "The perfect finishing touch to your look.", cta: "Shop Accessories", tone: "blush" },
-    { title: "Treat Yourself Sale", body: "Up to 30% off on beauty favorites.", cta: "Shop Sale", tone: "sand", badge: "UP TO 30% OFF" },
-  ];
   return (
     <section className="max-w-[1280px] mx-auto px-6 pt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
-      {promos.map((p) => (
-        <div key={p.title} className="relative rounded-[6px] overflow-hidden min-h-[280px] flex flex-col justify-between p-7">
+      {DATA.promotions.map((p) => (
+        <div key={p.id} className="relative rounded-[6px] overflow-hidden min-h-[280px] flex flex-col justify-between p-7">
           <Placeholder label={p.title} className="absolute inset-0" tone={p.tone} />
           {p.badge && (
             <div className="relative z-10 self-end w-[64px] h-[64px] rounded-full bg-[#C9727C] text-white flex flex-col items-center justify-center text-center leading-tight">
@@ -269,7 +318,7 @@ function ProductCard({ p }) {
         <span className="text-[11px] text-black/40">({p.reviews})</span>
       </div>
       <div className="flex items-center justify-between mt-2">
-        <span className="text-[14px] font-medium text-[#211D1B]">${p.price}</span>
+        <span className="text-[14px] font-medium text-[#211D1B]">${p.price.toFixed(2)}</span>
         <button className="text-[10px] uppercase tracking-wide border border-black/15 hover:border-[#C9727C] hover:text-[#C9727C] rounded-full px-3 py-1.5 flex items-center gap-1.5 transition-colors">
           <ShoppingBag size={11} /> Add
         </button>
@@ -280,14 +329,6 @@ function ProductCard({ p }) {
 
 function BestSellers() {
   const scrollRef = useRef(null);
-  const products = [
-    { name: "Hydrating Glow Face Serum", price: "24.99", rating: 4.5, reviews: 128, tone: "blush" },
-    { name: "Velvet Matte Lipstick", price: "14.99", rating: 4.5, reviews: 96, tone: "sand", tag: "Best Seller" },
-    { name: "Volume & Curl Mascara", price: "16.99", rating: 4, reviews: 73, tone: "ink" },
-    { name: "Nourishing Hair Shampoo", price: "19.99", rating: 4.5, reviews: 54, tone: "sky" },
-    { name: "4 Piece Brush Set", price: "18.99", rating: 4.5, reviews: 112, tone: "blush" },
-    { name: "Fragrance Eau de Parfum", price: "29.99", rating: 4.5, reviews: 88, tone: "sand" },
-  ];
   const scroll = (dir) => {
     if (scrollRef.current) scrollRef.current.scrollBy({ left: dir * 250, behavior: "smooth" });
   };
@@ -302,7 +343,7 @@ function BestSellers() {
         </div>
       </div>
       <div ref={scrollRef} className="flex md:grid md:grid-cols-6 gap-5 overflow-x-auto md:overflow-visible no-scrollbar pb-2">
-        {products.map((p) => <ProductCard key={p.name} p={p} />)}
+        {DATA.products.map((p) => <ProductCard key={p.id} p={p} />)}
       </div>
     </section>
   );
@@ -311,12 +352,7 @@ function BestSellers() {
 /* --------------------------- WHY CHOOSE US --------------------------- */
 
 function WhyChooseUs() {
-  const items = [
-    { icon: Leaf, title: "Clean Formulas", body: "Cruelty-free, dermatologist-tested ingredients you can trust on your skin." },
-    { icon: Award, title: "Curated by Experts", body: "Every product is vetted by our in-house beauty team before it reaches you." },
-    { icon: Sparkles, title: "Personalized Picks", body: "Recommendations tailored to your skin type, tone, and routine." },
-    { icon: Heart, title: "Loved by Thousands", body: "Over 50,000 five-star reviews from a community that keeps coming back." },
-  ];
+  const iconMap = { Leaf, Award, Sparkles, Heart };
   return (
     <section className="bg-[#F7EFEA] mt-16">
       <div className="max-w-[1280px] mx-auto px-6 py-16">
@@ -325,7 +361,9 @@ function WhyChooseUs() {
           <h2 className="font-serif text-[30px] mt-2 text-[#211D1B]">A beauty edit you can actually trust</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {items.map(({ icon: Icon, title, body }) => (
+          {DATA.whyChooseUs.map(({ icon: iconName, title, body }) => {
+            const Icon = iconMap[iconName];
+            return (
             <div key={title}>
               <div className="w-12 h-12 rounded-full bg-[#F3D8DA] flex items-center justify-center mb-4">
                 <Icon size={19} className="text-[#A85661]" strokeWidth={1.5} />
@@ -333,7 +371,8 @@ function WhyChooseUs() {
               <h3 className="font-serif text-[17px] text-[#211D1B] mb-1.5">{title}</h3>
               <p className="text-[13px] text-[#211D1B]/60 leading-relaxed">{body}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -343,11 +382,6 @@ function WhyChooseUs() {
 /* ----------------------------- GUIDES --------------------------------- */
 
 function BeautyGuides() {
-  const guides = [
-    { tag: "Skincare 101", title: "How to layer actives without irritating your skin", tone: "sky", read: "6 min read" },
-    { tag: "Makeup", title: "The 5-minute everyday face for busy mornings", tone: "blush", read: "4 min read" },
-    { tag: "Haircare", title: "Finding the right routine for your hair porosity", tone: "sand", read: "7 min read" },
-  ];
   return (
     <section className="max-w-[1280px] mx-auto px-6 pt-16">
       <div className="flex items-center justify-between mb-7">
@@ -358,8 +392,8 @@ function BeautyGuides() {
         <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hidden sm:flex items-center gap-1">Read More <ArrowRight size={13} /></a>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {guides.map((g) => (
-          <a href="#" key={g.title} className="group block">
+        {DATA.guides.map((g) => (
+          <a href="#" key={g.id} className="group block">
             <div className="relative rounded-[6px] overflow-hidden aspect-[4/3] mb-4">
               <Placeholder label={g.tag + " article image"} className="absolute inset-0 group-hover:scale-105 transition-transform duration-500" tone={g.tone} />
             </div>
@@ -376,11 +410,6 @@ function BeautyGuides() {
 /* ------------------------------ REVIEWS -------------------------------- */
 
 function Testimonials() {
-  const reviews = [
-    { name: "Priya M.", role: "Verified Buyer", quote: "My skin has never looked this even. The glow serum is a genuine repeat-purchase for me.", rating: 5 },
-    { name: "Alina K.", role: "Verified Buyer", quote: "Fast shipping, beautifully packaged, and the lipstick shade range is unmatched.", rating: 5 },
-    { name: "Devon R.", role: "Verified Buyer", quote: "Finally a haircare line that doesn't weigh my hair down. Shampoo smells incredible too.", rating: 4 },
-  ];
   return (
     <section className="bg-[#211D1B] mt-16">
       <div className="max-w-[1280px] mx-auto px-6 py-16">
@@ -391,8 +420,8 @@ function Testimonials() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {reviews.map((r) => (
-            <div key={r.name} className="bg-white/[0.06] border border-white/10 rounded-[6px] p-6">
+          {DATA.testimonials.map((r) => (
+            <div key={r.id} className="bg-white/[0.06] border border-white/10 rounded-[6px] p-6">
               <Quote size={22} className="text-[#C9727C] mb-4" />
               <p className="text-[14px] text-white/85 leading-relaxed mb-5">{r.quote}</p>
               <div className="flex items-center justify-between">
@@ -413,12 +442,11 @@ function Testimonials() {
 /* --------------------------- TRUSTED BY STRIP --------------------------- */
 
 function TrustedBy() {
-  const brands = ["DERMALOGICA", "GLOSSIER", "THE ORDINARY", "FENTY BEAUTY", "OLAPLEX", "TATCHA", "REFY", "DRUNK ELEPHANT"];
   return (
     <section className="border-y border-black/5 bg-[#FBF7F3] py-8 overflow-hidden">
       <p className="text-center text-[11px] uppercase tracking-[0.2em] text-black/35 mb-5">Trusted by the brands you love</p>
       <div className="flex gap-16 whitespace-nowrap animate-[marquee_28s_linear_infinite] w-max">
-        {[...brands, ...brands].map((b, i) => (
+        {[...DATA.trustedBrands, ...DATA.trustedBrands].map((b, i) => (
           <span key={i} className="font-serif text-[20px] text-black/25 tracking-wide">{b}</span>
         ))}
       </div>
@@ -430,16 +458,13 @@ function TrustedBy() {
 /* ------------------------------- TRUST BAR ------------------------------ */
 
 function TrustBar() {
-  const items = [
-    { icon: Truck, title: "Free Shipping", body: "On orders over $50" },
-    { icon: ShieldCheck, title: "100% Authentic", body: "Genuine products only" },
-    { icon: RotateCcw, title: "Easy Returns", body: "30-day return policy" },
-    { icon: Headphones, title: "Support 24/7", body: "We're here for you" },
-  ];
+  const iconMap = { Truck, ShieldCheck, RotateCcw, Headphones };
   return (
     <section className="max-w-[1280px] mx-auto px-6 mt-16">
       <div className="bg-[#F3D8DA]/50 rounded-[6px] grid grid-cols-2 md:grid-cols-4 gap-6 px-8 py-8">
-        {items.map(({ icon: Icon, title, body }) => (
+        {DATA.trustBar.map(({ icon: iconName, title, body }) => {
+          const Icon = iconMap[iconName];
+          return (
           <div key={title} className="flex items-center gap-3">
             <Icon size={22} className="text-[#A85661] shrink-0" strokeWidth={1.5} />
             <div>
@@ -447,7 +472,8 @@ function TrustBar() {
               <div className="text-[11px] text-black/50">{body}</div>
             </div>
           </div>
-        ))}
+        );
+        })}
       </div>
     </section>
   );
@@ -456,7 +482,6 @@ function TrustBar() {
 /* -------------------------------- NEWSLETTER + SOCIAL ------------------- */
 
 function NewsletterSocial() {
-  const social = ["Model portrait", "Makeup palette flatlay", "Perfume + petals", "Model close-up", "Skincare set"];
   return (
     <section className="max-w-[1280px] mx-auto px-6 mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-4">
       <div className="bg-[#F3D8DA] rounded-[6px] p-8 flex flex-col justify-center">
@@ -475,7 +500,7 @@ function NewsletterSocial() {
           </div>
         </div>
         <div className="grid grid-cols-5 gap-2 h-[calc(100%-40px)]">
-          {social.map((s, i) => (
+          {DATA.socialLinks.map((s, i) => (
             <div key={i} className="relative rounded-[6px] overflow-hidden min-h-[140px]">
               <Placeholder label={s} className="absolute inset-0" tone={["blush", "sand", "blush", "sky", "sage"][i]} />
             </div>
@@ -489,12 +514,6 @@ function NewsletterSocial() {
 /* --------------------------------- FOOTER -------------------------------- */
 
 function Footer() {
-  const cols = [
-    { title: "Shop", links: ["Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Sale"] },
-    { title: "Customer Service", links: ["Contact Us", "Shipping & Delivery", "Returns & Exchanges", "FAQs", "Track Your Order"] },
-    { title: "About Us", links: ["Our Story", "Ingredients", "Sustainability", "Blog", "Careers"] },
-    { title: "My Account", links: ["Sign In / Register", "My Orders", "Wishlist", "Account Settings"] },
-  ];
   return (
     <footer className="bg-[#211D1B] text-white mt-20">
       <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-8">
@@ -506,7 +525,7 @@ function Footer() {
               <FaSquareInstagram size={16} /> <FaSquareFacebook size={16} /> <FaSquareYoutube size={16} />
             </div>
           </div>
-          {cols.map((c) => (
+          {DATA.footer.columns.map((c) => (
             <div key={c.title}>
               <h4 className="text-[12px] uppercase tracking-wide text-white/40 mb-4">{c.title}</h4>
               <ul className="space-y-2.5">
