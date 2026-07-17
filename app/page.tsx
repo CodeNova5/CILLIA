@@ -40,13 +40,47 @@ const DATA = {
     ],
     mainNav: ["New In", "Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Tools", "Brands"],
   },
+  hero: {
+    main: {
+      badge: "New Season, New You",
+      title: "Unleash\nYour Beauty",
+      body: "Discover must-have beauty, haircare, makeup & accessories curated for you.",
+      bgImage: "/hero.png",
+      tone: "blush",
+      ctas: [
+        { label: "Shop New Arrivals", link: "#" },
+        { label: "Explore Collections", link: "#" }
+      ]
+    },
+    sideCards: [
+      {
+        id: 1,
+        title: "Skincare\nEssentials",
+        body: "Glow starts with great skincare.",
+        cta: "Shop Skincare",
+        link: "#",
+        bgImage: "/skincare-hero.png", // Leave empty to use placeholder tone, or add image URL
+        tone: "sky"
+      },
+      {
+        id: 2,
+        title: "Haircare\nFor Every You",
+        body: "Stronger, shinier, healthier hair.",
+        cta: "Shop Haircare",
+        link: "#",
+        bgImage: "/haircare-hero.png", // Use image or let layout default to placeholder
+        placeholderLabel: "Haircare products + brush",
+        tone: "sand"
+      }
+    ]
+  },
   categories: [
-    { id: 1, name: "Makeup", tone: "blush" },
-    { id: 2, name: "Skincare", tone: "sky" },
-    { id: 3, name: "Haircare", tone: "sand" },
-    { id: 4, name: "Fragrance", tone: "blush" },
-    { id: 5, name: "Tools & Brushes", tone: "sage" },
-    { id: 6, name: "Accessories", tone: "blush" },
+    { id: 1, name: "Makeup", tone: "blush", img: "/makeup.png" },
+    { id: 2, name: "Skincare", tone: "sky", img: "/skincare.png" },
+    { id: 3, name: "Haircare", tone: "sand", img: "/haircare.png" },
+    { id: 4, name: "Fragrance", tone: "blush", img: "/fragrance.png" },
+    { id: 5, name: "Tools & Brushes", tone: "sage", img: "/tools.png" },
+    { id: 6, name: "Accessories", tone: "blush", img: "/accessories.png" },
     { id: 7, name: "New Arrivals", tone: "sand", featured: "NEW" },
     { id: 8, name: "Sale", tone: "blush", featured: "SALE" },
   ],
@@ -188,25 +222,43 @@ function Header() {
 /* ---------------------------- HERO --------------------------------- */
 
 function Hero() {
+  const mainHero = DATA.hero.main;
+  const tones = {
+    blush: "bg-[#F3D8DA]",
+    sage: "bg-[#E4E9DF]",
+    sand: "bg-[#EFE3D3]",
+    sky: "bg-[#DCE6E8]",
+  };
+
   return (
     <section className="max-w-[1280px] mx-auto px-6 pt-6 grid grid-cols-1 lg:grid-cols-[1.65fr_1fr] gap-4">
-      <div className="relative rounded-[6px] overflow-hidden bg-[#F3D8DA] min-h-[420px] lg:min-h-[560px] flex items-end">
-        <img src="/hero.png" alt="Hero — model portrait, soft pink tones" className="absolute inset-0 w-full h-full object-cover" />
+      {/* Main Banner */}
+      <div className={`relative rounded-[6px] overflow-hidden ${tones[mainHero.tone] || 'bg-[#F3D8DA]'} min-h-[420px] lg:min-h-[560px] flex items-end`}>
+        {mainHero.bgImage && (
+          <img src={mainHero.bgImage} alt={mainHero.title} className="absolute inset-0 w-full h-full object-cover" />
+        )}
         <div className="relative z-10 p-8 md:p-12 max-w-[480px]">
-          <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">New Season, New You</span>
-          <h1 className="font-serif text-[42px] md:text-[56px] leading-[1.02] mt-3 text-[#211D1B]">
-            Unleash<br />Your Beauty
+          <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">{mainHero.badge}</span>
+          <h1 className="font-serif text-[42px] md:text-[56px] leading-[1.02] mt-3 text-[#211D1B] whitespace-pre-line">
+            {mainHero.title}
           </h1>
           <p className="text-[14px] text-[#211D1B]/70 mt-4 max-w-[380px] leading-relaxed">
-            Discover must-have beauty, haircare, makeup &amp; accessories curated for you.
+            {mainHero.body}
           </p>
           <div className="flex items-center gap-3 mt-6 flex-wrap">
-            <button className="bg-[#C9727C] hover:bg-[#A85661] text-white text-[12px] tracking-wide uppercase font-medium px-6 py-3.5 rounded-full transition-colors">
-              Shop New Arrivals
-            </button>
-            <button className="border border-[#211D1B]/25 hover:border-[#211D1B] text-[#211D1B] text-[12px] tracking-wide uppercase font-medium px-6 py-3.5 rounded-full transition-colors">
-              Explore Collections
-            </button>
+            {mainHero.ctas.map((cta, index) => (
+              <a
+                key={index}
+                href={cta.link}
+                className={`text-[12px] tracking-wide uppercase font-medium px-6 py-3.5 rounded-full transition-colors ${
+                  index === 0 
+                    ? "bg-[#C9727C] hover:bg-[#A85661] text-white" 
+                    : "border border-[#211D1B]/25 hover:border-[#211D1B] text-[#211D1B]"
+                }`}
+              >
+                {cta.label}
+              </a>
+            ))}
           </div>
           <div className="flex items-center gap-1.5 mt-8">
             <span className="w-5 h-1.5 rounded-full bg-[#A85661]" />
@@ -216,27 +268,32 @@ function Hero() {
         </div>
       </div>
 
+      {/* Side Promotion Cards */}
       <div className="grid grid-rows-2 gap-4">
-        <div className="relative rounded-[6px] overflow-hidden bg-[#DCE6E8] p-7 flex flex-col justify-between min-h-[270px]">
-                
+        {DATA.hero.sideCards.map((card) => (
+          <div 
+            key={card.id} 
+            className={`relative rounded-[6px] overflow-hidden ${tones[card.tone] || 'bg-[#DCE6E8]'} p-7 flex flex-col justify-between min-h-[270px]`}
+          >
+            {card.bgImage ? (
+              <img src={card.bgImage} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
+            ) : card.placeholderLabel ? (
+              <Placeholder label={card.placeholderLabel} className="absolute inset-0" tone={card.tone} />
+            ) : null}
+
             <div className="relative z-10">
-            <h3 className="font-serif text-[24px] leading-tight text-[#211D1B]">Skincare<br />Essentials</h3>
-            <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[190px]">Glow starts with great skincare.</p>
+              <h3 className="font-serif text-[24px] leading-tight text-[#211D1B] whitespace-pre-line">
+                {card.title}
+              </h3>
+              <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[190px]">
+                {card.body}
+              </p>
+            </div>
+            <a href={card.link} className="relative z-10 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] flex items-center gap-1.5 group">
+              {card.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
-          <a href="#" className="relative z-10 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] flex items-center gap-1.5 group">
-            Shop Skincare <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </div>
-        <div className="relative rounded-[6px] overflow-hidden bg-[#EFE3D3] p-7 flex flex-col justify-between min-h-[270px]">
-          <Placeholder label="Haircare products + brush" className="absolute inset-0" tone="sand" />
-          <div className="relative z-10">
-            <h3 className="font-serif text-[24px] leading-tight text-[#211D1B]">Haircare<br />For Every You</h3>
-            <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[190px]">Stronger, shinier, healthier hair.</p>
-          </div>
-          <a href="#" className="relative z-10 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] flex items-center gap-1.5 group">
-            Shop Haircare <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -260,7 +317,7 @@ function CategoryCircles() {
               {c.featured ? (
                 <span className="text-[11px] font-serif tracking-wide text-[#211D1B]">{c.featured}</span>
               ) : (
-                <span className="text-[9px] uppercase tracking-wide text-black/35">icon</span>
+                <img src={c.img} alt={c.name} className="w-10 h-10 object-contain" />
               )}
             </div>
             <span className="text-[12px] text-[#211D1B]/80 text-center">{c.name}</span>
