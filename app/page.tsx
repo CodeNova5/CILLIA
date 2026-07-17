@@ -79,15 +79,12 @@ const DATA = {
     { id: 2, name: "Skincare", tone: "sky", img: "/skincare.png" },
     { id: 3, name: "Haircare", tone: "sand", img: "/haircare.png" },
     { id: 4, name: "Fragrance", tone: "blush", img: "/fragrance.png" },
-    { id: 5, name: "Tools & Brushes", tone: "sage", img: "/tools.png" },
     { id: 6, name: "Accessories", tone: "blush", img: "/accessories.png" },
-    { id: 7, name: "New Arrivals", tone: "sand", featured: "NEW" },
-    { id: 8, name: "Sale", tone: "blush", featured: "SALE" },
   ],
   promotions: [
-    { id: 1, title: "Flawless Look Every Day", body: "Makeup that enhances your natural beauty.", cta: "Shop Makeup", tone: "sky" },
-    { id: 2, title: "Beauty Accessories", body: "The perfect finishing touch to your look.", cta: "Shop Accessories", tone: "blush" },
-    { id: 3, title: "Treat Yourself Sale", body: "Up to 30% off on beauty favorites.", cta: "Shop Sale", tone: "sand", badge: "UP TO 30% OFF" },
+    { id: 1, title: "Flawless Look Every Day", body: "Makeup that enhances your natural beauty.", img: "/makeup-promo.png", cta: "Shop Makeup", tone: "sky" },
+    { id: 2, title: "Beauty Accessories", body: "The perfect finishing touch to your look.", img: "/accessories-promo.png", cta: "Shop Accessories", tone: "blush" },
+    { id: 3, title: "Treat Yourself Sale", body: "Up to 30% off on beauty favorites.", img: "/sale-promo.png", cta: "Shop Sale", tone: "sand", badge: "UP TO 30% OFF" },
   ],
   products: [
     { id: 1, name: "Hydrating Glow Face Serum", price: 24.99, rating: 4.5, reviews: 128, tone: "blush" },
@@ -314,11 +311,7 @@ function CategoryCircles() {
             <div className={`w-[76px] h-[76px] md:w-[92px] md:h-[92px] rounded-full flex items-center justify-center transition-transform group-hover:-translate-y-1 ${
               c.tone === "blush" ? "bg-[#F3D8DA]" : c.tone === "sky" ? "bg-[#DCE6E8]" : c.tone === "sand" ? "bg-[#EFE3D3]" : "bg-[#E4E9DF]"
             }`}>
-              {c.featured ? (
-                <span className="text-[11px] font-serif tracking-wide text-[#211D1B]">{c.featured}</span>
-              ) : (
-                <img src={c.img} alt={c.name} className="w-10 h-10 object-contain" />
-              )}
+              <img src={c.img} alt={c.name} className="w-10 h-10 md:w-12 md:h-12 object-contain" />
             </div>
             <span className="text-[12px] text-[#211D1B]/80 text-center">{c.name}</span>
           </a>
