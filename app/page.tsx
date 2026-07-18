@@ -151,7 +151,7 @@ const DATA = {
 /*  SHARED PRIMITIVES (shadcn-style: Card, Button, Badge)              */
 /* ------------------------------------------------------------------ */
 
-function Card({ className = "", children, tone, ...props }) {
+function Card({ className = "", children, ...props }) {
   return (
     <div
       className={`relative rounded-[10px] border border-black/[0.06] bg-white shadow-[0_1px_2px_rgba(33,29,27,0.04)] ${className}`}
@@ -204,7 +204,8 @@ function Eyebrow({ children, className = "" }) {
 }
 
 // To:
-function SectionHeading({ eyebrow, title, cta, ctaLabel = "View All" }: { eyebrow?: any; title: any; cta: any; ctaLabel?: string; })  return (
+function SectionHeading({ eyebrow, title, cta = false, ctaLabel = "View All" }) {
+return (
     <div className="flex items-end justify-between mb-7 gap-4">
       <div>
         {eyebrow && <Eyebrow className="block mb-1.5">{eyebrow}</Eyebrow>}
@@ -382,7 +383,7 @@ function Hero() {
 function CategoryCircles() {
   return (
     <section className="max-w-[1280px] mx-auto px-6">
-      <SectionHeading title="Shop by Category" cta />
+      <SectionHeading title="Shop by Category" cta eyebrow={undefined} />
       <div className="grid grid-cols-4 md:grid-cols-8 gap-x-4 gap-y-8">
         {DATA.categories.map((c) => (
           <a href="#" key={c.id} className="flex flex-col items-center gap-3 group">
