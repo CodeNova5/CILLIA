@@ -1,90 +1,70 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import {
   Search, User, Heart, ShoppingBag, Star, ChevronLeft, ChevronRight,
-  Truck, ShieldCheck, RotateCcw, Headphones, ArrowRight, Sparkles, Mail, Quote, Leaf, Award, Play
+  Truck, ShieldCheck, RotateCcw, Headphones, ArrowRight, Sparkles, Mail, Quote, Leaf, Award, ArrowUpRight
 } from "lucide-react";
 
 import { FaSquareInstagram } from "react-icons/fa6";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaSquareYoutube } from "react-icons/fa6";
 
-/* ------------------------------------------------------------------ */
-/*  DESIGN TOKENS                                                      */
-/*  bg:        #FBF7F3 (warm ivory)                                    */
-/*  surface:   #F7EFEA                                                 */
-/*  blush:     #F3D8DA                                                */
-/*  blush-lt:  #FBEDEE                                                 */
-/*  rose:      #C9727C  (primary accent / CTA)                        */
-/*  rose-dark: #A85661                                                 */
-/*  ink:       #211D1B                                                 */
-/*  ink-soft:  #6B6260                                                 */
-/*  sage:      #9FAE95  (clean-beauty tag accent)                     */
-/*  gold:      #B8935F  (rating stars / detail accent)                */
-/*  display font: "Fraunces" (serif, has real editorial personality)   */
-/*  body font:    "Inter"                                              */
-/* ------------------------------------------------------------------ */
-
-const FONT_LINK = "Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700";
-
-/* ------------------------------------------------------------------ */
-/*  DATA STRUCTURE - Ready for Database Integration                   */
-/* ------------------------------------------------------------------ */
+const FONT_LINK = "Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700";
 
 const DATA = {
   navigation: {
     announcement: [
       "FREE SHIPPING ON ORDERS OVER $50",
-      "EXCLUSIVE OFFERS FOR BEAUTY LOVERS",
-      "SIGN UP & GET 10% OFF",
+      "SIGN UP & GET 10% OFF YOUR FIRST ORDER",
+      "NEW ARRIVALS DROPPING WEEKLY",
     ],
-    mainNav: ["New In", "Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Tools", "Brands"],
+    mainNav: ["New In", "Makeup", "Skincare", "Haircare", "Fragrance", "Accessories", "Brands"],
   },
   hero: {
-    main: {
-      badge: "New Season, New You",
-      title: "Unleash\nYour Beauty",
-      body: "Discover must-have beauty, haircare, makeup & accessories curated for you.",
-      bgImage: "/hero.png",
-      tone: "blush",
-      ctas: [
-        { label: "Shop New Arrivals", link: "#" },
-        { label: "Explore Collections", link: "#" }
-      ]
-    },
-    sideCards: [
-      {
-        id: 1,
-        title: "Skincare\nEssentials",
-        body: "Glow starts with great skincare.",
-        cta: "Shop Skincare",
-        link: "#",
-        bgImage: "/skincare-hero.png", // Leave empty to use placeholder tone, or add image URL
-        tone: "sky"
-      },
-      {
-        id: 2,
-        title: "Haircare\nFor Every You",
-        body: "Stronger, shinier, healthier hair.",
-        cta: "Shop Haircare",
-        link: "#",
-        bgImage: "/haircare-hero.png", // Use image or let layout default to placeholder
-        placeholderLabel: "Haircare products + brush",
-        tone: "sand"
-      }
-    ]
+    badge: "New Season, New You",
+    title: "Unleash Your Beauty",
+    subtitle: "Discover your most radiant self with our curated edit of premium beauty essentials.",
+    bgImage: "/hero.png",
+    cta: { label: "Shop New Arrivals", link: "#" },
+    secondaryCta: { label: "Explore Collections", link: "#" },
   },
-  categories: [
-    { id: 1, name: "Makeup", tone: "blush", img: "/makeup.png" },
-    { id: 2, name: "Skincare", tone: "sky", img: "/skincare.png" },
-    { id: 3, name: "Haircare", tone: "sand", img: "/haircare.png" },
-    { id: 4, name: "Fragrance", tone: "blush", img: "/fragrance.png" },
-    { id: 6, name: "Accessories", tone: "blush", img: "/accessories.png" },
-  ],
-  promotions: [
-    { id: 1, title: "Flawless Look Every Day", body: "Makeup that enhances your natural beauty.", img: "/makeup-promo.png", cta: "Shop Makeup", tone: "sky" },
-    { id: 2, title: "Beauty Accessories", body: "The perfect finishing touch to your look.", img: "/accessories-promo.png", cta: "Shop Accessories", tone: "blush" },
-    { id: 3, title: "Treat Yourself Sale", body: "Up to 30% off on beauty favorites.", img: "/sale-promo.png", cta: "Shop Sale", tone: "sand", badge: "UP TO 30% OFF" },
+  collections: [
+    {
+      id: 1,
+      title: "Skincare\nEssentials",
+      subtitle: "Glow from within",
+      description: "Cleanse, treat, and moisturize with formulas that love your skin back.",
+      cta: "Shop Skincare",
+      link: "#",
+      tone: "sky",
+    },
+    {
+      id: 2,
+      title: "Haircare\nFor Every You",
+      subtitle: "Strong, shiny, healthy",
+      description: "From nourishing shampoos to leave-in treatments — your hair deserves the best.",
+      cta: "Shop Haircare",
+      link: "#",
+      tone: "sand",
+    },
+    {
+      id: 3,
+      title: "Makeup\nMust-Haves",
+      subtitle: "Express yourself",
+      description: "Bold lips, flawless bases, and eyes that captivate — create your signature look.",
+      cta: "Shop Makeup",
+      link: "#",
+      tone: "blush",
+    },
+    {
+      id: 4,
+      title: "Accessories\n& More",
+      subtitle: "The finishing touch",
+      description: "Brushes, bags, tools, and treasures to complete your beauty ritual.",
+      cta: "Shop Accessories",
+      link: "#",
+      tone: "sage",
+    },
   ],
   products: [
     { id: 1, name: "Hydrating Glow Face Serum", price: 24.99, rating: 4.5, reviews: 128, tone: "blush" },
@@ -95,10 +75,10 @@ const DATA = {
     { id: 6, name: "Fragrance Eau de Parfum", price: 29.99, rating: 4.5, reviews: 88, tone: "sand" },
   ],
   whyChooseUs: [
-    { id: 1, icon: "Leaf", title: "Clean Formulas", body: "Cruelty-free, dermatologist-tested ingredients you can trust on your skin." },
-    { id: 2, icon: "Award", title: "Curated by Experts", body: "Every product is vetted by our in-house beauty team before it reaches you." },
-    { id: 3, icon: "Sparkles", title: "Personalized Picks", body: "Recommendations tailored to your skin type, tone, and routine." },
-    { id: 4, icon: "Heart", title: "Loved by Thousands", body: "Over 50,000 five-star reviews from a community that keeps coming back." },
+    { id: 1, icon: "Leaf", title: "Clean Formulas", body: "Cruelty-free, dermatologist-tested ingredients you can trust." },
+    { id: 2, icon: "Award", title: "Curated by Experts", body: "Every product vetted by our in-house beauty team." },
+    { id: 3, icon: "Sparkles", title: "Personalized Picks", body: "Recommendations tailored to your unique beauty needs." },
+    { id: 4, icon: "Heart", title: "Loved by Thousands", body: "Over 50,000 five-star reviews from our community." },
   ],
   guides: [
     { id: 1, tag: "Skincare 101", title: "How to layer actives without irritating your skin", tone: "sky", read: "6 min read" },
@@ -216,134 +196,156 @@ function Header() {
   );
 }
 
-/* ---------------------------- HERO --------------------------------- */
+/* ---------------------------- HERO (FULL-WIDTH) --------------------------- */
 
 function Hero() {
-  const mainHero = DATA.hero.main;
+  const hero = DATA.hero;
+  return (
+    <section className="relative w-full min-h-[75vh] md:min-h-[85vh] flex items-center bg-[#F3D8DA] overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#C9727C]/10 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#A85661]/10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/20 blur-3xl" />
+      </div>
+
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `radial-gradient(circle at 25px 25px, #211D1B 1px, transparent 1px)`,
+        backgroundSize: '50px 50px'
+      }} />
+
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 w-full py-20 md:py-0">
+        <div className="max-w-[700px]">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9727C]" />
+            <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">
+              {hero.badge}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="font-serif text-[56px] md:text-[80px] lg:text-[96px] leading-[0.92] text-[#211D1B] -ml-[3px]">
+            {hero.title}
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-[15px] md:text-[17px] text-[#211D1B]/65 mt-5 max-w-[480px] leading-relaxed">
+            {hero.subtitle}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex items-center gap-4 mt-8 flex-wrap">
+            <a
+              href={hero.cta.link}
+              className="group inline-flex items-center gap-2 bg-[#C9727C] hover:bg-[#A85661] text-white text-[13px] uppercase tracking-wide font-semibold px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#C9727C]/25"
+            >
+              {hero.cta.label}
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href={hero.secondaryCta.link}
+              className="group inline-flex items-center gap-2 border-2 border-[#211D1B]/20 hover:border-[#211D1B]/50 text-[#211D1B] text-[13px] uppercase tracking-wide font-semibold px-8 py-4 rounded-full transition-all duration-300"
+            >
+              {hero.secondaryCta.label}
+              <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className="flex items-center gap-10 mt-12 pt-8 border-t border-[#211D1B]/10">
+            <div>
+              <div className="font-serif text-[28px] text-[#211D1B]">12K+</div>
+              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">Products</div>
+            </div>
+            <div>
+              <div className="font-serif text-[28px] text-[#211D1B]">50K+</div>
+              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">5★ Reviews</div>
+            </div>
+            <div>
+              <div className="font-serif text-[28px] text-[#211D1B]">98%</div>
+              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">Satisfaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FBF7F3] to-transparent" />
+    </section>
+  );
+}
+
+/* ------------------------ COLLECTIONS (4 BEAUTIFUL CARDS) ------------------- */
+
+function CollectionCard({ collection, index }) {
   const tones = {
+    sky: "bg-[#DCE6E8]",
+    sand: "bg-[#EFE3D3]",
     blush: "bg-[#F3D8DA]",
     sage: "bg-[#E4E9DF]",
-    sand: "bg-[#EFE3D3]",
-    sky: "bg-[#DCE6E8]",
   };
 
   return (
-    <section className="max-w-[1280px] mx-auto px-6 pt-6 grid grid-cols-1 lg:grid-cols-[1.65fr_1fr] gap-4">
-      {/* Main Banner */}
-      <div className={`relative rounded-[6px] overflow-hidden ${tones[mainHero.tone] || 'bg-[#F3D8DA]'} min-h-[420px] lg:min-h-[560px] flex items-end`}>
-        {mainHero.bgImage && (
-          <img src={mainHero.bgImage} alt={mainHero.title} className="absolute inset-0 w-full h-full object-cover" />
-        )}
-        <div className="relative z-10 p-8 md:p-12 max-w-[480px]">
-          <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">{mainHero.badge}</span>
-          <h1 className="font-serif text-[42px] md:text-[56px] leading-[1.02] mt-3 text-[#211D1B] whitespace-pre-line">
-            {mainHero.title}
-          </h1>
-          <p className="text-[14px] text-[#211D1B]/70 mt-4 max-w-[380px] leading-relaxed">
-            {mainHero.body}
-          </p>
-          <div className="flex items-center gap-3 mt-6 flex-wrap">
-            {mainHero.ctas.map((cta, index) => (
-              <a
-                key={index}
-                href={cta.link}
-                className={`text-[12px] tracking-wide uppercase font-medium px-6 py-3.5 rounded-full transition-colors ${
-                  index === 0 
-                    ? "bg-[#C9727C] hover:bg-[#A85661] text-white" 
-                    : "border border-[#211D1B]/25 hover:border-[#211D1B] text-[#211D1B]"
-                }`}
-              >
-                {cta.label}
-              </a>
-            ))}
-          </div>
-          <div className="flex items-center gap-1.5 mt-8">
-            <span className="w-5 h-1.5 rounded-full bg-[#A85661]" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#A85661]/30" />
-            <span className="w-1.5 h-1.5 rounded-full bg-[#A85661]/30" />
-          </div>
-        </div>
+    <a
+      href={collection.link}
+      className={`group relative rounded-[16px] overflow-hidden min-h-[400px] md:min-h-[460px] flex flex-col justify-between p-8 md:p-10 ${tones[collection.tone]} transition-all duration-500 hover:shadow-2xl hover:shadow-black/10 hover:-translate-y-1`}
+    >
+      {/* Decorative circle */}
+      <div className="absolute -top-20 -right-20 w-[200px] h-[200px] rounded-full bg-white/30 transition-all duration-500 group-hover:scale-125 group-hover:bg-white/40" />
+      <div className="absolute -bottom-20 -left-20 w-[150px] h-[150px] rounded-full bg-black/[0.03]" />
+
+      <div className="relative z-10">
+        <span className="font-serif text-[48px] text-black/[0.06] leading-none select-none">
+          {String(index + 1).padStart(2, '0')}
+        </span>
       </div>
 
-      {/* Side Promotion Cards */}
-      <div className="grid grid-rows-2 gap-4">
-        {DATA.hero.sideCards.map((card) => (
-          <div 
-            key={card.id} 
-            className={`relative rounded-[6px] overflow-hidden ${tones[card.tone] || 'bg-[#DCE6E8]'} p-7 flex flex-col justify-between min-h-[270px]`}
-          >
-            {card.bgImage ? (
-              <img src={card.bgImage} alt={card.title} className="absolute inset-0 w-full h-full object-cover" />
-            ) : card.placeholderLabel ? (
-              <Placeholder label={card.placeholderLabel} className="absolute inset-0" tone={card.tone} />
-            ) : null}
+      <div className="relative z-10">
+        <span className="text-[11px] uppercase tracking-[0.2em] text-[#A85661] font-semibold mb-2 block">
+          {collection.subtitle}
+        </span>
 
-            <div className="relative z-10">
-              <h3 className="font-serif text-[24px] leading-tight text-[#211D1B] whitespace-pre-line">
-                {card.title}
-              </h3>
-              <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[190px]">
-                {card.body}
-              </p>
-            </div>
-            <a href={card.link} className="relative z-10 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] flex items-center gap-1.5 group">
-              {card.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-        ))}
+        <h3 className="font-serif text-[32px] md:text-[38px] leading-[1.05] text-[#211D1B] whitespace-pre-line mb-3">
+          {collection.title}
+        </h3>
+
+        <p className="text-[13px] md:text-[14px] text-[#211D1B]/60 leading-relaxed max-w-[300px] mb-5">
+          {collection.description}
+        </p>
+
+        <span className="inline-flex items-center gap-2 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] group-hover:text-[#C9727C] transition-colors">
+          {collection.cta}
+          <span className="w-8 h-8 rounded-full bg-[#211D1B]/10 group-hover:bg-[#C9727C] group-hover:text-white flex items-center justify-center transition-all duration-300">
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+          </span>
+        </span>
       </div>
-    </section>
+    </a>
   );
 }
 
-/* ------------------------ CATEGORY WHEEL ---------------------------- */
-
-function CategoryCircles() {
+function Collections() {
   return (
-    <section className="max-w-[1280px] mx-auto px-6 pt-14">
-      <div className="flex items-center justify-between mb-7">
-        <h2 className="font-serif text-[26px] text-[#211D1B]">Shop by Category</h2>
-        <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold flex items-center gap-1">View All <ArrowRight size={13} /></a>
+    <section className="max-w-[1280px] mx-auto px-6 pt-20 md:pt-28">
+      <div className="flex items-end justify-between mb-12">
+        <div>
+          <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">Curated Collections</span>
+          <h2 className="font-serif text-[32px] md:text-[40px] text-[#211D1B] mt-2 leading-tight">
+            Discover by <span className="italic">category</span>
+          </h2>
+        </div>
+        <a href="#" className="hidden md:flex items-center gap-2 text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hover:gap-3 transition-all shrink-0">
+          View All <ArrowRight size={13} />
+        </a>
       </div>
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-x-4 gap-y-8">
-        {DATA.categories.map((c) => (
-          <a href="#" key={c.id} className="flex flex-col items-center gap-3 group">
-            <div className={`w-[76px] h-[76px] md:w-[92px] md:h-[92px] rounded-full flex items-center justify-center transition-transform group-hover:-translate-y-1 ${
-              c.tone === "blush" ? "bg-[#F3D8DA]" : c.tone === "sky" ? "bg-[#DCE6E8]" : c.tone === "sand" ? "bg-[#EFE3D3]" : "bg-[#E4E9DF]"
-            }`}>
-              <img src={c.img} alt={c.name} className="w-10 h-10 md:w-12 md:h-12 object-contain" />
-            </div>
-            <span className="text-[12px] text-[#211D1B]/80 text-center">{c.name}</span>
-          </a>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {DATA.collections.map((c, i) => (
+          <CollectionCard key={c.id} collection={c} index={i} />
         ))}
       </div>
-    </section>
-  );
-}
-
-/* ------------------------- PROMO TRIO -------------------------------- */
-
-function PromoTrio() {
-  return (
-    <section className="max-w-[1280px] mx-auto px-6 pt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
-      {DATA.promotions.map((p) => (
-        <div key={p.id} className="relative rounded-[6px] overflow-hidden min-h-[280px] flex flex-col justify-between p-7">
-          <Placeholder label={p.title} className="absolute inset-0" tone={p.tone} />
-          {p.badge && (
-            <div className="relative z-10 self-end w-[64px] h-[64px] rounded-full bg-[#C9727C] text-white flex flex-col items-center justify-center text-center leading-tight">
-              <span className="text-[13px] font-serif">30%</span>
-              <span className="text-[8px] tracking-wide">OFF</span>
-            </div>
-          )}
-          <div className="relative z-10 mt-auto">
-            <h3 className="font-serif text-[24px] leading-tight text-[#211D1B] max-w-[220px]">{p.title}</h3>
-            <p className="text-[13px] text-[#211D1B]/65 mt-2 max-w-[220px]">{p.body}</p>
-            <a href="#" className="text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] flex items-center gap-1.5 mt-4 group">
-              {p.cta} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-        </div>
-      ))}
     </section>
   );
 }
@@ -383,13 +385,16 @@ function BestSellers() {
     if (scrollRef.current) scrollRef.current.scrollBy({ left: dir * 250, behavior: "smooth" });
   };
   return (
-    <section className="max-w-[1280px] mx-auto px-6 pt-16">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-serif text-[26px] text-[#211D1B]">Best Sellers</h2>
-        <div className="flex items-center gap-3">
-          <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hidden sm:flex items-center gap-1">View All <ArrowRight size={13} /></a>
-          <button onClick={() => scroll(-1)} className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center hover:border-[#C9727C] hover:text-[#C9727C]"><ChevronLeft size={16} /></button>
-          <button onClick={() => scroll(1)} className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center hover:border-[#C9727C] hover:text-[#C9727C]"><ChevronRight size={16} /></button>
+    <section className="max-w-[1280px] mx-auto px-6 pt-20 md:pt-28">
+      <div className="flex items-end justify-between mb-8">
+        <div>
+          <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">Shop The Edit</span>
+          <h2 className="font-serif text-[32px] md:text-[40px] text-[#211D1B] mt-2 leading-tight">Best Sellers</h2>
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
+          <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hidden sm:flex items-center gap-1 hover:gap-2 transition-all">View All <ArrowRight size={13} /></a>
+          <button onClick={() => scroll(-1)} className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center hover:border-[#C9727C] hover:text-[#C9727C] hover:bg-[#C9727C]/5 transition-all duration-300"><ChevronLeft size={16} /></button>
+          <button onClick={() => scroll(1)} className="w-9 h-9 rounded-full border border-black/15 flex items-center justify-center hover:border-[#C9727C] hover:text-[#C9727C] hover:bg-[#C9727C]/5 transition-all duration-300"><ChevronRight size={16} /></button>
         </div>
       </div>
       <div ref={scrollRef} className="flex md:grid md:grid-cols-6 gap-5 overflow-x-auto md:overflow-visible no-scrollbar pb-2">
@@ -404,21 +409,21 @@ function BestSellers() {
 function WhyChooseUs() {
   const iconMap = { Leaf, Award, Sparkles, Heart };
   return (
-    <section className="bg-[#F7EFEA] mt-16">
-      <div className="max-w-[1280px] mx-auto px-6 py-16">
-        <div className="max-w-[560px] mb-12">
+    <section className="bg-[#F7EFEA] mt-20 md:mt-28">
+      <div className="max-w-[1280px] mx-auto px-6 py-16 md:py-20">
+        <div className="max-w-[560px] mb-14">
           <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">Why Louvette</span>
-          <h2 className="font-serif text-[30px] mt-2 text-[#211D1B]">A beauty edit you can actually trust</h2>
+          <h2 className="font-serif text-[32px] md:text-[40px] mt-2 text-[#211D1B] leading-tight">A beauty edit you can actually trust</h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {DATA.whyChooseUs.map(({ icon: iconName, title, body }) => {
             const Icon = iconMap[iconName];
             return (
             <div key={title}>
-              <div className="w-12 h-12 rounded-full bg-[#F3D8DA] flex items-center justify-center mb-4">
-                <Icon size={19} className="text-[#A85661]" strokeWidth={1.5} />
+              <div className="w-14 h-14 rounded-2xl bg-[#F3D8DA] flex items-center justify-center mb-5 transition-transform hover:scale-105 duration-300">
+                <Icon size={22} className="text-[#A85661]" strokeWidth={1.5} />
               </div>
-              <h3 className="font-serif text-[17px] text-[#211D1B] mb-1.5">{title}</h3>
+              <h3 className="font-serif text-[19px] text-[#211D1B] mb-2">{title}</h3>
               <p className="text-[13px] text-[#211D1B]/60 leading-relaxed">{body}</p>
             </div>
             );
@@ -433,23 +438,29 @@ function WhyChooseUs() {
 
 function BeautyGuides() {
   return (
-    <section className="max-w-[1280px] mx-auto px-6 pt-16">
-      <div className="flex items-center justify-between mb-7">
+    <section className="max-w-[1280px] mx-auto px-6 pt-20 md:pt-28">
+      <div className="flex items-end justify-between mb-8">
         <div>
           <span className="text-[11px] tracking-[0.2em] uppercase text-[#A85661] font-semibold">Journal</span>
-          <h2 className="font-serif text-[26px] text-[#211D1B] mt-1">Beauty Guides &amp; Edits</h2>
+          <h2 className="font-serif text-[32px] md:text-[40px] text-[#211D1B] mt-2 leading-tight">Beauty Guides &amp; Edits</h2>
         </div>
-        <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hidden sm:flex items-center gap-1">Read More <ArrowRight size={13} /></a>
+        <a href="#" className="text-[12px] uppercase tracking-wide text-[#C9727C] font-semibold hidden sm:flex items-center gap-1 hover:gap-2 transition-all">Read More <ArrowRight size={13} /></a>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {DATA.guides.map((g) => (
           <a href="#" key={g.id} className="group block">
-            <div className="relative rounded-[6px] overflow-hidden aspect-[4/3] mb-4">
-              <Placeholder label={g.tag + " article image"} className="absolute inset-0 group-hover:scale-105 transition-transform duration-500" tone={g.tone} />
+            <div className="relative rounded-[12px] overflow-hidden aspect-[4/3] mb-5">
+              <Placeholder label={g.tag + " article image"} className="absolute inset-0 group-hover:scale-105 transition-transform duration-700" tone={g.tone} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
             <span className="text-[11px] uppercase tracking-wide text-[#A85661] font-semibold">{g.tag}</span>
-            <h3 className="font-serif text-[19px] leading-snug text-[#211D1B] mt-1.5 group-hover:text-[#C9727C] transition-colors">{g.title}</h3>
-            <span className="text-[12px] text-black/40 mt-1.5 block">{g.read}</span>
+            <h3 className="font-serif text-[20px] leading-snug text-[#211D1B] mt-1.5 group-hover:text-[#C9727C] transition-colors">{g.title}</h3>
+            <div className="flex items-center gap-3 mt-2">
+              <span className="text-[12px] text-black/40">{g.read}</span>
+              <span className="text-[12px] text-[#C9727C] font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                Read <ArrowRight size={12} />
+              </span>
+            </div>
           </a>
         ))}
       </div>
@@ -461,23 +472,26 @@ function BeautyGuides() {
 
 function Testimonials() {
   return (
-    <section className="bg-[#211D1B] mt-16">
-      <div className="max-w-[1280px] mx-auto px-6 py-16">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="font-serif text-[30px] text-white">What Our Customers Say</h2>
-          <div className="hidden sm:flex items-center gap-2 text-white/70 text-[13px]">
-            <Stars rating={4.8} /> <span>4.8 average · 12,400 reviews</span>
+    <section className="bg-[#211D1B] mt-20 md:mt-28">
+      <div className="max-w-[1280px] mx-auto px-6 py-16 md:py-20">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span className="text-[11px] tracking-[0.2em] uppercase text-[#C9727C] font-semibold">Social Proof</span>
+            <h2 className="font-serif text-[32px] md:text-[40px] text-white mt-2 leading-tight">What Our Customers Say</h2>
+          </div>
+          <div className="flex items-center gap-2 text-white/60 text-[13px] shrink-0">
+            <Stars rating={4.8} /> <span>4.8 average · 12,400+ reviews</span>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {DATA.testimonials.map((r) => (
-            <div key={r.id} className="bg-white/[0.06] border border-white/10 rounded-[6px] p-6">
-              <Quote size={22} className="text-[#C9727C] mb-4" />
-              <p className="text-[14px] text-white/85 leading-relaxed mb-5">{r.quote}</p>
+            <div key={r.id} className="bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-[12px] p-7 hover:bg-white/[0.09] transition-colors duration-300">
+              <Quote size={24} className="text-[#C9727C] mb-5" />
+              <p className="text-[14px] text-white/85 leading-relaxed mb-6 italic">&ldquo;{r.quote}&rdquo;</p>
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-[13px] text-white font-medium">{r.name}</div>
-                  <div className="text-[11px] text-white/40">{r.role}</div>
+                  <div className="text-[11px] text-white/40 mt-0.5">{r.role}</div>
                 </div>
                 <Stars rating={r.rating} />
               </div>
@@ -615,8 +629,7 @@ export default function BeautyHome() {
       <AnnouncementBar />
       <Header />
       <Hero />
-      <CategoryCircles />
-      <PromoTrio />
+      <Collections />
       <BestSellers />
       <WhyChooseUs />
       <BeautyGuides />
