@@ -1,8 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   Search, User, Heart, ShoppingBag, Star, ChevronLeft, ChevronRight,
-  Truck, ShieldCheck, RotateCcw, Headphones, ArrowRight, Sparkles, Mail, Quote, Leaf, Award, ArrowUpRight
+  Truck, ShieldCheck, RotateCcw, Headphones, ArrowRight, Sparkles, Mail, Quote, Leaf, Award, ArrowUpRight, Menu, X
 } from "lucide-react";
 
 import { FaSquareInstagram } from "react-icons/fa6";
@@ -36,6 +36,7 @@ const DATA = {
       description: "Cleanse, treat, and moisturize with formulas that love your skin back.",
       cta: "Shop Skincare",
       link: "#",
+      image: "/skincare-hero.png",
       tone: "sky",
     },
     {
@@ -45,6 +46,7 @@ const DATA = {
       description: "From nourishing shampoos to leave-in treatments — your hair deserves the best.",
       cta: "Shop Haircare",
       link: "#",
+      image: "/haircare-hero.png",
       tone: "sand",
     },
     {
@@ -54,6 +56,7 @@ const DATA = {
       description: "Bold lips, flawless bases, and eyes that captivate — create your signature look.",
       cta: "Shop Makeup",
       link: "#",
+      image: "/makeup-hero.png",
       tone: "blush",
     },
     {
@@ -63,16 +66,17 @@ const DATA = {
       description: "Brushes, bags, tools, and treasures to complete your beauty ritual.",
       cta: "Shop Accessories",
       link: "#",
+      image: "/accessories-promo.png",
       tone: "sage",
     },
   ],
   products: [
-    { id: 1, name: "Hydrating Glow Face Serum", price: 24.99, rating: 4.5, reviews: 128, tone: "blush" },
-    { id: 2, name: "Velvet Matte Lipstick", price: 14.99, rating: 4.5, reviews: 96, tone: "sand", tag: "Best Seller" },
-    { id: 3, name: "Volume & Curl Mascara", price: 16.99, rating: 4, reviews: 73, tone: "ink" },
-    { id: 4, name: "Nourishing Hair Shampoo", price: 19.99, rating: 4.5, reviews: 54, tone: "sky" },
-    { id: 5, name: "4 Piece Brush Set", price: 18.99, rating: 4.5, reviews: 112, tone: "blush" },
-    { id: 6, name: "Fragrance Eau de Parfum", price: 29.99, rating: 4.5, reviews: 88, tone: "sand" },
+    { id: 1, name: "Hydrating Glow Face Serum", price: 24.99, rating: 4.5, reviews: 128, image: "/skincare.png", tone: "blush" },
+    { id: 2, name: "Velvet Matte Lipstick", price: 14.99, rating: 4.5, reviews: 96, image: "/makeup.png", tone: "sand", tag: "Best Seller" },
+    { id: 3, name: "Volume & Curl Mascara", price: 16.99, rating: 4, reviews: 73, image: "/Gemini_Generated_Image_v2o02rv2o02rv2o0.png", tone: "ink" },
+    { id: 4, name: "Nourishing Hair Shampoo", price: 19.99, rating: 4.5, reviews: 54, image: "/haircare.png", tone: "sky" },
+    { id: 5, name: "4 Piece Brush Set", price: 18.99, rating: 4.5, reviews: 112, image: "/Gemini_Generated_Image_mrza28mrza28mrza.png", tone: "blush" },
+    { id: 6, name: "Fragrance Eau de Parfum", price: 29.99, rating: 4.5, reviews: 88, image: "/fragrance.png", tone: "sand" },
   ],
   whyChooseUs: [
     { id: 1, icon: "Leaf", title: "Clean Formulas", body: "Cruelty-free, dermatologist-tested ingredients you can trust." },
@@ -157,34 +161,50 @@ function AnnouncementBar() {
 }
 
 function Header() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
-    <header className="bg-[#FBF7F3] sticky top-0 z-40 border-b border-black/5">
-      <div className="max-w-[1280px] mx-auto px-6 pt-5 pb-4 flex items-center gap-8">
+    <header className="bg-[#FBF7F3]/95 backdrop-blur-md sticky top-0 z-40 border-b border-black/5">
+      <div className="max-w-[1280px] mx-auto px-6 pt-5 pb-4 flex items-center gap-4">
+        {/* Hamburger — mobile only */}
+        <button
+          className="md:hidden shrink-0"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+
         <div className="font-serif text-[26px] tracking-tight text-[#211D1B] shrink-0">Louvette</div>
-        <div className="flex-1 max-w-[520px] hidden md:flex items-center bg-white border border-black/10 rounded-full px-4 py-2.5">
+
+        {/* Desktop search */}
+        <div className="flex-1 max-w-[520px] hidden md:flex items-center bg-white border border-black/10 rounded-full px-4 py-2.5 focus-within:border-[#C9727C] transition-colors">
           <input
             placeholder="Search for products, brands and more…"
             className="flex-1 bg-transparent outline-none text-[13px] placeholder:text-black/40"
           />
           <Search size={16} className="text-black/40" />
         </div>
-        <div className="flex items-center gap-6 ml-auto shrink-0 text-[#211D1B]">
+
+        <div className="flex items-center gap-5 md:gap-6 ml-auto shrink-0 text-[#211D1B]">
           <button className="hidden sm:flex flex-col items-center gap-0.5 group">
-            <User size={19} strokeWidth={1.5} />
+            <User size={19} strokeWidth={1.5} className="group-hover:text-[#C9727C] transition-colors" />
             <span className="text-[10px] leading-tight text-black/60 group-hover:text-[#C9727C]">Account</span>
           </button>
           <button className="hidden sm:flex flex-col items-center gap-0.5 group">
-            <Heart size={19} strokeWidth={1.5} />
+            <Heart size={19} strokeWidth={1.5} className="group-hover:text-[#C9727C] transition-colors" />
             <span className="text-[10px] leading-tight text-black/60 group-hover:text-[#C9727C]">Wishlist</span>
           </button>
           <button className="relative flex flex-col items-center gap-0.5 group">
-            <ShoppingBag size={19} strokeWidth={1.5} />
+            <ShoppingBag size={19} strokeWidth={1.5} className="group-hover:text-[#C9727C] transition-colors" />
             <span className="absolute -top-1.5 -right-2 bg-[#C9727C] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
             <span className="text-[10px] leading-tight text-black/60 group-hover:text-[#C9727C]">Cart</span>
           </button>
         </div>
       </div>
-      <nav className="max-w-[1280px] mx-auto px-6 pb-3.5 flex items-center gap-8 overflow-x-auto no-scrollbar">
+
+      {/* Desktop nav */}
+      <nav className="max-w-[1280px] mx-auto px-6 pb-3.5 hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar">
         {DATA.navigation.mainNav.map((l) => (
           <a key={l} href="#" className="text-[12px] tracking-[0.08em] uppercase text-[#211D1B]/75 hover:text-[#C9727C] whitespace-nowrap transition-colors">
             {l}
@@ -192,6 +212,73 @@ function Header() {
         ))}
         <a href="#" className="text-[12px] tracking-[0.08em] uppercase text-[#C9727C] font-semibold whitespace-nowrap ml-auto">Sale</a>
       </nav>
+
+      {/* Mobile slide-out menu */}
+      <div
+        className={`md:hidden fixed inset-0 top-0 bg-[#FBF7F3] z-50 transform transition-transform duration-300 ease-in-out ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Spacer to clear the sticky header */}
+        <div className="h-[112px]" />
+        <div className="flex flex-col flex-1 overflow-y-auto px-6 pb-8">
+          {/* Mobile search */}
+          <div className="flex items-center bg-white border border-black/10 rounded-full px-4 py-3 mb-6 focus-within:border-[#C9727C] transition-colors">
+            <input
+              placeholder="Search…"
+              className="flex-1 bg-transparent outline-none text-[13px] placeholder:text-black/40"
+            />
+            <Search size={16} className="text-black/40" />
+          </div>
+
+          {/* Mobile nav links */}
+          <div className="flex flex-col gap-1">
+            {[...DATA.navigation.mainNav, "Sale"].map((l, i) => {
+              const isSale = l === "Sale";
+              return (
+                <a
+                  key={l}
+                  href="#"
+                  onClick={() => setMobileOpen(false)}
+                  className={`px-4 py-3.5 rounded-[10px] text-[14px] uppercase tracking-wide transition-all ${
+                    isSale
+                      ? "bg-[#C9727C] text-white font-semibold mt-2"
+                      : "text-[#211D1B]/80 hover:bg-black/5 hover:text-[#C9727C]"
+                  }`}
+                >
+                  {l}
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Mobile account links */}
+          <div className="mt-auto pt-8 border-t border-black/5">
+            <div className="flex items-center gap-6 justify-center text-[13px] text-black/60">
+              <button className="flex flex-col items-center gap-1" onClick={() => setMobileOpen(false)}>
+                <User size={18} strokeWidth={1.5} className="text-[#C9727C]" />
+                <span>Account</span>
+              </button>
+              <button className="flex flex-col items-center gap-1" onClick={() => setMobileOpen(false)}>
+                <Heart size={18} strokeWidth={1.5} className="text-[#C9727C]" />
+                <span>Wishlist</span>
+              </button>
+              <button className="flex flex-col items-center gap-1" onClick={() => setMobileOpen(false)}>
+                <ShoppingBag size={18} strokeWidth={1.5} className="text-[#C9727C]" />
+                <span>Cart (0)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Overlay backdrop */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/30 z-40"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
     </header>
   );
 }
@@ -292,32 +379,42 @@ function CollectionCard({ collection, index }) {
       href={collection.link}
       className={`group relative rounded-[16px] overflow-hidden min-h-[400px] md:min-h-[460px] flex flex-col justify-between p-8 md:p-10 ${tones[collection.tone]} transition-all duration-500 hover:shadow-2xl hover:shadow-black/10 hover:-translate-y-1`}
     >
+      {/* Background image */}
+      <img
+        src={collection.image}
+        alt={collection.title.replace('\n', ' ')}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
+      />
+      {/* Gradient overlays for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+
       {/* Decorative circle */}
-      <div className="absolute -top-20 -right-20 w-[200px] h-[200px] rounded-full bg-white/30 transition-all duration-500 group-hover:scale-125 group-hover:bg-white/40" />
-      <div className="absolute -bottom-20 -left-20 w-[150px] h-[150px] rounded-full bg-black/[0.03]" />
+      <div className="absolute -top-20 -right-20 w-[200px] h-[200px] rounded-full bg-white/10 transition-all duration-500 group-hover:scale-125 group-hover:bg-white/20" />
+      <div className="absolute -bottom-20 -left-20 w-[150px] h-[150px] rounded-full bg-black/[0.08]" />
 
       <div className="relative z-10">
-        <span className="font-serif text-[48px] text-black/[0.06] leading-none select-none">
+        <span className="font-serif text-[48px] text-white/10 leading-none select-none">
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
 
       <div className="relative z-10">
-        <span className="text-[11px] uppercase tracking-[0.2em] text-[#A85661] font-semibold mb-2 block">
+        <span className="text-[11px] uppercase tracking-[0.2em] text-[#F3D8DA] font-semibold mb-2 block">
           {collection.subtitle}
         </span>
 
-        <h3 className="font-serif text-[32px] md:text-[38px] leading-[1.05] text-[#211D1B] whitespace-pre-line mb-3">
+        <h3 className="font-serif text-[32px] md:text-[38px] leading-[1.05] text-white whitespace-pre-line mb-3 drop-shadow-sm">
           {collection.title}
         </h3>
 
-        <p className="text-[13px] md:text-[14px] text-[#211D1B]/60 leading-relaxed max-w-[300px] mb-5">
+        <p className="text-[13px] md:text-[14px] text-white/70 leading-relaxed max-w-[300px] mb-5 drop-shadow-sm">
           {collection.description}
         </p>
 
-        <span className="inline-flex items-center gap-2 text-[12px] uppercase tracking-wide font-semibold text-[#211D1B] group-hover:text-[#C9727C] transition-colors">
+        <span className="inline-flex items-center gap-2 text-[12px] uppercase tracking-wide font-semibold text-white group-hover:text-[#F3D8DA] transition-colors">
           {collection.cta}
-          <span className="w-8 h-8 rounded-full bg-[#211D1B]/10 group-hover:bg-[#C9727C] group-hover:text-white flex items-center justify-center transition-all duration-300">
+          <span className="w-8 h-8 rounded-full bg-white/20 group-hover:bg-[#C9727C] group-hover:text-white flex items-center justify-center transition-all duration-300 backdrop-blur-sm">
             <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </span>
         </span>
@@ -355,23 +452,32 @@ function Collections() {
 function ProductCard({ p }) {
   return (
     <div className="group shrink-0 w-[220px] md:w-auto">
-      <div className="relative rounded-[6px] overflow-hidden bg-[#F7EFEA] aspect-[4/5] mb-3">
-        <Placeholder label={p.name} className="absolute inset-0" tone={p.tone} />
-        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="relative rounded-[12px] overflow-hidden bg-[#F7EFEA] aspect-[4/5] mb-3">
+        {p.image ? (
+          <img
+            src={p.image}
+            alt={p.name}
+            className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <Placeholder label={p.name} className="absolute inset-0" tone={p.tone} />
+        )}
+        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:scale-110 z-10" aria-label="Add to wishlist">
           <Heart size={14} />
         </button>
         {p.tag && (
-          <span className="absolute top-3 left-3 bg-[#211D1B] text-white text-[9px] uppercase tracking-wide px-2 py-1 rounded-full">{p.tag}</span>
+          <span className="absolute top-3 left-3 bg-[#211D1B]/80 backdrop-blur-sm text-white text-[9px] uppercase tracking-wide px-3 py-1.5 rounded-full font-medium z-10">{p.tag}</span>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
-      <h4 className="text-[13px] text-[#211D1B] leading-snug">{p.name}</h4>
+      <h4 className="text-[13px] text-[#211D1B] leading-snug font-medium">{p.name}</h4>
       <div className="flex items-center gap-1.5 mt-1.5">
         <Stars rating={p.rating} />
         <span className="text-[11px] text-black/40">({p.reviews})</span>
       </div>
-      <div className="flex items-center justify-between mt-2">
-        <span className="text-[14px] font-medium text-[#211D1B]">${p.price.toFixed(2)}</span>
-        <button className="text-[10px] uppercase tracking-wide border border-black/15 hover:border-[#C9727C] hover:text-[#C9727C] rounded-full px-3 py-1.5 flex items-center gap-1.5 transition-colors">
+      <div className="flex items-center justify-between mt-2.5">
+        <span className="text-[15px] font-semibold text-[#211D1B]">${p.price.toFixed(2)}</span>
+        <button className="text-[10px] uppercase tracking-wide font-medium border border-black/15 hover:border-[#C9727C] hover:text-[#C9727C] hover:bg-[#C9727C]/5 rounded-full px-4 py-1.5 flex items-center gap-1.5 transition-all duration-300">
           <ShoppingBag size={11} /> Add
         </button>
       </div>
@@ -507,11 +613,11 @@ function Testimonials() {
 
 function TrustedBy() {
   return (
-    <section className="border-y border-black/5 bg-[#FBF7F3] py-8 overflow-hidden">
-      <p className="text-center text-[11px] uppercase tracking-[0.2em] text-black/35 mb-5">Trusted by the brands you love</p>
+    <section className="border-y border-black/5 bg-[#FBF7F3] py-10 overflow-hidden">
+      <p className="text-center text-[11px] uppercase tracking-[0.2em] text-black/35 mb-6">Trusted by the brands you love</p>
       <div className="flex gap-16 whitespace-nowrap animate-[marquee_28s_linear_infinite] w-max">
         {[...DATA.trustedBrands, ...DATA.trustedBrands].map((b, i) => (
-          <span key={i} className="font-serif text-[20px] text-black/25 tracking-wide">{b}</span>
+          <span key={i} className="font-serif text-[22px] text-black/25 tracking-wide hover:text-black/40 transition-colors">{b}</span>
         ))}
       </div>
       <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
@@ -524,13 +630,15 @@ function TrustedBy() {
 function TrustBar() {
   const iconMap = { Truck, ShieldCheck, RotateCcw, Headphones };
   return (
-    <section className="max-w-[1280px] mx-auto px-6 mt-16">
-      <div className="bg-[#F3D8DA]/50 rounded-[6px] grid grid-cols-2 md:grid-cols-4 gap-6 px-8 py-8">
+    <section className="max-w-[1280px] mx-auto px-6 -mt-10 relative z-10">
+      <div className="bg-white shadow-[0_4px_20px_-8px_rgba(33,29,27,0.08)] rounded-[12px] grid grid-cols-2 md:grid-cols-4 gap-6 px-8 py-8 border border-black/5">
         {DATA.trustBar.map(({ icon: iconName, title, body }) => {
           const Icon = iconMap[iconName];
           return (
-          <div key={title} className="flex items-center gap-3">
-            <Icon size={22} className="text-[#A85661] shrink-0" strokeWidth={1.5} />
+          <div key={title} className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full bg-[#F3D8DA]/70 flex items-center justify-center group-hover:bg-[#F3D8DA] transition-colors shrink-0">
+              <Icon size={18} className="text-[#A85661]" strokeWidth={1.5} />
+            </div>
             <div>
               <div className="text-[13px] font-medium text-[#211D1B]">{title}</div>
               <div className="text-[11px] text-black/50">{body}</div>
@@ -547,26 +655,32 @@ function TrustBar() {
 
 function NewsletterSocial() {
   return (
-    <section className="max-w-[1280px] mx-auto px-6 mt-16 grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-4">
-      <div className="bg-[#F3D8DA] rounded-[6px] p-8 flex flex-col justify-center">
+    <section className="max-w-[1280px] mx-auto px-6 mt-20 md:mt-28 grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-6">
+      <div className="bg-[#F3D8DA] rounded-[16px] p-8 md:p-10 flex flex-col justify-center min-h-[280px]">
         <span className="text-[11px] uppercase tracking-[0.2em] text-[#A85661] font-semibold">Beauty In Your Inbox</span>
-        <h3 className="font-serif text-[24px] text-[#211D1B] mt-2 mb-4 max-w-[320px]">Sign up for exclusive offers, new arrivals and beauty tips.</h3>
-        <div className="flex gap-2 max-w-[380px]">
-          <input placeholder="Enter your email address" className="flex-1 bg-white rounded-full px-4 py-3 text-[13px] outline-none" />
-          <button className="bg-[#C9727C] hover:bg-[#A85661] text-white text-[12px] uppercase tracking-wide font-medium px-5 rounded-full transition-colors whitespace-nowrap">Subscribe</button>
+        <h3 className="font-serif text-[26px] md:text-[30px] text-[#211D1B] mt-3 mb-5 leading-tight max-w-[360px]">Sign up for exclusive offers &amp; beauty tips.</h3>
+        <div className="flex gap-2 max-w-[400px]">
+          <input placeholder="Enter your email" className="flex-1 bg-white rounded-full px-5 py-3.5 text-[13px] outline-none focus:ring-2 focus:ring-[#C9727C]/30 transition-all placeholder:text-black/30" />
+          <button className="bg-[#C9727C] hover:bg-[#A85661] text-white text-[12px] uppercase tracking-wide font-semibold px-6 rounded-full transition-all duration-300 whitespace-nowrap hover:shadow-lg hover:shadow-[#C9727C]/25">
+            <Mail size={16} className="md:hidden" />
+            <span className="hidden md:inline">Subscribe</span>
+          </button>
         </div>
       </div>
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-serif text-[20px] text-[#211D1B]">Follow Our Beauty Journey</h3>
-          <div className="flex gap-2 text-[#211D1B]/60">
-            <FaSquareInstagram size={16} /> <FaSquareFacebook size={16} /> <FaSquareYoutube size={16} />
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="font-serif text-[22px] text-[#211D1B]">Follow Our Journey</h3>
+          <div className="flex gap-3 text-[#211D1B]/50">
+            <FaSquareInstagram size={18} className="hover:text-[#C9727C] transition-colors cursor-pointer" />
+            <FaSquareFacebook size={18} className="hover:text-[#C9727C] transition-colors cursor-pointer" />
+            <FaSquareYoutube size={18} className="hover:text-[#C9727C] transition-colors cursor-pointer" />
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-2 h-[calc(100%-40px)]">
+        <div className="grid grid-cols-5 gap-2 h-[calc(100%-44px)] min-h-[180px]">
           {DATA.socialLinks.map((s, i) => (
-            <div key={i} className="relative rounded-[6px] overflow-hidden min-h-[140px]">
-              <Placeholder label={s} className="absolute inset-0" tone={["blush", "sand", "blush", "sky", "sage"][i]} />
+            <div key={i} className="relative rounded-[10px] overflow-hidden min-h-[140px] group cursor-pointer">
+              <Placeholder label={s} className="absolute inset-0 group-hover:scale-105 transition-transform duration-500" tone={["blush", "sand", "blush", "sky", "sage"][i]} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ))}
         </div>
@@ -579,33 +693,35 @@ function NewsletterSocial() {
 
 function Footer() {
   return (
-    <footer className="bg-[#211D1B] text-white mt-20">
+    <footer className="bg-[#211D1B] text-white mt-20 md:mt-28">
       <div className="max-w-[1280px] mx-auto px-6 pt-16 pb-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-14 border-b border-white/10">
           <div className="col-span-2 md:col-span-1">
-            <div className="font-serif text-[22px] mb-3">Louvette</div>
-            <p className="text-[12px] text-white/50 leading-relaxed mb-4">Beauty essentials curated with care, for every routine and every glow.</p>
-            <div className="flex gap-3 text-white/60">
-              <FaSquareInstagram size={16} /> <FaSquareFacebook size={16} /> <FaSquareYoutube size={16} />
+            <div className="font-serif text-[24px] mb-4 text-white">Louvette</div>
+            <p className="text-[12px] text-white/45 leading-relaxed mb-5 max-w-[220px]">Beauty essentials curated with care, for every routine and every glow.</p>
+            <div className="flex gap-3 text-white/40">
+              <FaSquareInstagram size={18} className="hover:text-white transition-colors cursor-pointer" />
+              <FaSquareFacebook size={18} className="hover:text-white transition-colors cursor-pointer" />
+              <FaSquareYoutube size={18} className="hover:text-white transition-colors cursor-pointer" />
             </div>
           </div>
           {DATA.footer.columns.map((c) => (
             <div key={c.title}>
-              <h4 className="text-[12px] uppercase tracking-wide text-white/40 mb-4">{c.title}</h4>
-              <ul className="space-y-2.5">
+              <h4 className="text-[11px] uppercase tracking-wide text-white/40 mb-5 font-semibold">{c.title}</h4>
+              <ul className="space-y-3">
                 {c.links.map((l) => (
-                  <li key={l}><a href="#" className="text-[13px] text-white/75 hover:text-white transition-colors">{l}</a></li>
+                  <li key={l}><a href="#" className="text-[13px] text-white/65 hover:text-white transition-colors duration-200">{l}</a></li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 text-[12px] text-white/40">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 text-[12px] text-white/35">
           <span>© 2026 Louvette. All Rights Reserved.</span>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-white">Privacy Policy</a>
-            <a href="#" className="hover:text-white">Terms of Service</a>
-            <a href="#" className="hover:text-white">Accessibility</a>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Accessibility</a>
           </div>
         </div>
       </div>
