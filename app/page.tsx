@@ -85,9 +85,9 @@ const DATA = {
     { id: 4, icon: "Heart", title: "Loved by Thousands", body: "Over 50,000 five-star reviews from our community." },
   ],
   guides: [
-    { id: 1, tag: "Skincare 101", title: "How to layer actives without irritating your skin", tone: "sky", read: "6 min read" },
-    { id: 2, tag: "Makeup", title: "The 5-minute everyday face for busy mornings", tone: "blush", read: "4 min read" },
-    { id: 3, tag: "Haircare", title: "Finding the right routine for your hair porosity", tone: "sand", read: "7 min read" },
+    { id: 1, tag: "Skincare 101", title: "How to layer actives without irritating your skin", tone: "sky", read: "6 min read", image: "/layer.jpg" },
+    { id: 2, tag: "Makeup", title: "The 5-minute everyday face for busy mornings", tone: "blush", read: "4 min read", image: "/5-minute.jpg" },
+    { id: 3, tag: "Haircare", title: "Finding the right routine for your hair porosity", tone: "sand", read: "7 min read", image: "/b77d4f223734fc4a20a6b13ccb9ab04a.jpg" },
   ],
   testimonials: [
     { id: 1, name: "Priya M.", role: "Verified Buyer", quote: "My skin has never looked this even. The glow serum is a genuine repeat-purchase for me.", rating: 5 },
@@ -289,18 +289,22 @@ function Hero() {
   const hero = DATA.hero;
   return (
     <section className="relative w-full min-h-[75vh] md:min-h-[85vh] flex items-center bg-[#F3D8DA] overflow-hidden">
+      {/* Background image */}
+      <img
+        src={hero.bgImage}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/25 to-black/20" />
+
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#C9727C]/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#A85661]/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/20 blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-[#C9727C]/20 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] rounded-full bg-[#A85661]/20 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-white/15 blur-3xl" />
       </div>
-
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: `radial-gradient(circle at 25px 25px, #211D1B 1px, transparent 1px)`,
-        backgroundSize: '50px 50px'
-      }} />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 w-full py-20 md:py-0">
         <div className="max-w-[700px]">
@@ -313,12 +317,12 @@ function Hero() {
           </div>
 
           {/* Title */}
-          <h1 className="font-serif text-[56px] md:text-[80px] lg:text-[96px] leading-[0.92] text-[#211D1B] -ml-[3px]">
+          <h1 className="font-serif text-[56px] md:text-[80px] lg:text-[96px] leading-[0.92] text-white -ml-[3px]">
             {hero.title}
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[15px] md:text-[17px] text-[#211D1B]/65 mt-5 max-w-[480px] leading-relaxed">
+          <p className="text-[15px] md:text-[17px] text-white/70 mt-5 max-w-[480px] leading-relaxed">
             {hero.subtitle}
           </p>
 
@@ -333,7 +337,7 @@ function Hero() {
             </a>
             <a
               href={hero.secondaryCta.link}
-              className="group inline-flex items-center gap-2 border-2 border-[#211D1B]/20 hover:border-[#211D1B]/50 text-[#211D1B] text-[13px] uppercase tracking-wide font-semibold px-8 py-4 rounded-full transition-all duration-300"
+              className="group inline-flex items-center gap-2 border-2 border-white/30 hover:border-white/70 text-white text-[13px] uppercase tracking-wide font-semibold px-8 py-4 rounded-full transition-all duration-300"
             >
               {hero.secondaryCta.label}
               <ArrowUpRight size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -341,18 +345,18 @@ function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center gap-10 mt-12 pt-8 border-t border-[#211D1B]/10">
+          <div className="flex items-center gap-10 mt-12 pt-8 border-t border-white/15">
             <div>
-              <div className="font-serif text-[28px] text-[#211D1B]">12K+</div>
-              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">Products</div>
+              <div className="font-serif text-[28px] text-white">12K+</div>
+              <div className="text-[11px] uppercase tracking-wide text-white/50 mt-0.5">Products</div>
             </div>
             <div>
-              <div className="font-serif text-[28px] text-[#211D1B]">50K+</div>
-              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">5★ Reviews</div>
+              <div className="font-serif text-[28px] text-white">50K+</div>
+              <div className="text-[11px] uppercase tracking-wide text-white/50 mt-0.5">5★ Reviews</div>
             </div>
             <div>
-              <div className="font-serif text-[28px] text-[#211D1B]">98%</div>
-              <div className="text-[11px] uppercase tracking-wide text-black/50 mt-0.5">Satisfaction</div>
+              <div className="font-serif text-[28px] text-white">98%</div>
+              <div className="text-[11px] uppercase tracking-wide text-white/50 mt-0.5">Satisfaction</div>
             </div>
           </div>
         </div>
@@ -556,8 +560,12 @@ function BeautyGuides() {
         {DATA.guides.map((g) => (
           <a href="#" key={g.id} className="group block">
             <div className="relative rounded-[12px] overflow-hidden aspect-[4/3] mb-5">
-              <Placeholder label={g.tag + " article image"} className="absolute inset-0 group-hover:scale-105 transition-transform duration-700" tone={g.tone} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <img
+                src={g.image}
+                alt={g.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
             <span className="text-[11px] uppercase tracking-wide text-[#A85661] font-semibold">{g.tag}</span>
             <h3 className="font-serif text-[20px] leading-snug text-[#211D1B] mt-1.5 group-hover:text-[#C9727C] transition-colors">{g.title}</h3>
