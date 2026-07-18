@@ -203,8 +203,8 @@ function Eyebrow({ children, className = "" }) {
   );
 }
 
-function SectionHeading({ eyebrow, title, cta, ctaLabel = "View All" }) {
-  return (
+// To:
+function SectionHeading({ eyebrow, title, cta, ctaLabel = "View All" }: { eyebrow?: any; title: any; cta: any; ctaLabel?: string; })  return (
     <div className="flex items-end justify-between mb-7 gap-4">
       <div>
         {eyebrow && <Eyebrow className="block mb-1.5">{eyebrow}</Eyebrow>}
